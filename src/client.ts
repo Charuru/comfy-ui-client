@@ -38,31 +38,12 @@ export class ComfyUIClient {
 
       const url = `ws://${this.serverAddress}/ws?clientId=${this.clientId}`;
 
-      logger.info(`Connecting to url: ${url}`);
-
       this.ws = new WebSocket(url, {
         perMessageDeflate: false,
       });
 
       this.ws.on('open', () => {
-        logger.info('Connection open');
         resolve();
-      });
-
-      this.ws.on('close', () => {
-        logger.info('Connection closed');
-      });
-
-      this.ws.on('error', (err) => {
-        logger.error({ err }, 'WebSockets error');
-      });
-
-      this.ws.on('message', (data, isBinary) => {
-        if (isBinary) {
-          logger.debug('Received binary data');
-        } else {
-          logger.debug('Received data: %s', data.toString());
-        }
       });
     });
   }
